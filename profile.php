@@ -9,8 +9,8 @@ if(isset($_GET['profileID'])) {
 
 
 $sql = "SELECT * FROM profil 
-        LEFT JOIN photo ON profile.profilePhotoID = photo.ID
-        WHERE profile.ID=? 
+        LEFT JOIN photo ON profil.profilePhotoID = photo.ID
+        WHERE profil.ID=? 
         LIMIT 1";
 
 $db = new mysqli('localhost', 'root', '', 'inst');
