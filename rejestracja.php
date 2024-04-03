@@ -14,12 +14,16 @@
             <h1>Rejestracja</h1>
          </div>
          <div class="row">
-             <form action="login.php">
-                  <div class="mb-3 col-6 offset-3">
+             <form action="login.php"> 
+                 <div class="mb-3 col-6 offset-3">
                    <label class="form label w-100" for="nameInput" >Imię</label>
                    <input class="form-control w-100" type="name" name="name" id="nameInput">
                  </div>
-             <div class="mb-3 col-6 offset-3">
+                 <div class="mb-3 col-6 offset-3">
+                   <label class="form label w-100" for="surenameInput" >Nazwisko</label>
+                   <input class="form-control w-100" type="surename" name="surename" id="surenameInput">
+                 </div>
+                 <div class="mb-3 col-6 offset-3">
                    <label class="form-lable w-100" for="emailInput">Email:</label>
                    <input class="form-control w-100" type="email" name="email" id="emailInput"> 
                  </div>
