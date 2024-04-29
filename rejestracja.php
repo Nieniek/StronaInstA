@@ -1,3 +1,16 @@
+<?php
+require_once('class/User.class.php');
+
+if(isset($_REQUEST['email'])&& isset($_REQUEST['password'])&& isset($_REQUEST['name'])&& isset($_REQUEST['surename'])){
+  $email =  &$_REQUEST['email'];
+  $password =  &$_REQUEST['password'];
+  $name =  &$_REQUEST['name'];
+  $surename =  &$_REQUEST['surename'];
+
+  $result = User::Register($email, $password, $name, $surename);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -45,10 +58,22 @@
                    <button type="sumbit" class="btn btn-primary w-100">Zaloguj</button>
                  </div>
              </form>
+             <?php
+            if (isset($result)) {
+                if ($result) {
+                    echo "Udało się utworzyć konto";
+                } else {
+                    echo "Nie udało się utworzyć konta";
+                }
+            }
+
+            ?>
          </div>
     </div>    
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
      crossorigin="anonymous"></script>
+
+
 </body>
 </html>
