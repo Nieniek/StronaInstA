@@ -17,8 +17,8 @@ nav {
     border-right: 1px solid #04053f;
     box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
     float: left;
-    position: fixed; /* Nowy styl dodany */
-    height: 100%; /* Nowy styl dodany */
+    position: fixed; 
+    height: 100%; 
 }
 
 ul {
