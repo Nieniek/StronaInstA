@@ -1,24 +1,31 @@
 <?php
 class User{
-
     static function Register(string $email, string $password, string $name, string $surename) : bool   {
-        //user(id INT, email varchar(128) password varchar(128) name varchar(20) surename varchar(25) )
-
-        $passwordHash = password_hash($password, PASSWORD_ARHON2I);
-
+      
         $db = new mysqli('localhost', 'root', '', 'inst');
+        $checkQuery = "SELECT id FROM user WHERE email = ?";
+        $checkStmt = $db->prepare($checkQuery);
+        $checkStmt->bind_param("s", $email);
+        $checkStmt->execute();
+        $checkStmt->store_result();
+        if ($checkStmt->num_rows > 0) {
+            
+            return false;
+        }
 
-        $q = "INSERT INTO user (email, password, name, surename) Values (?,?,?,?)";
+    
+        $passwordHash = password_hash($password, PASSWORD_ARGON2I);
 
-        $q = $db->prepare($sql);
+        $insertQuery = "INSERT INTO user (email, password, name, surename) VALUES (?, ?, ?, ?)";
+        $insertStmt = $db->prepare($insertQuery);
+        $insertStmt->bind_param("ssss", $email, $passwordHash, $name, $surename);
+        $result = $insertStmt->execute();
 
-        $q->bind_param("ss", $email, $passwordHash, $name, $surename);
-
-        $result = $q->execute();
+        $insertStmt->close();
+        $db->close();
 
         return $result;
-
     }
 }
-
 ?>
+
