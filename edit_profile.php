@@ -10,29 +10,11 @@ $db = new mysqli('localhost', 'root', '', 'inst');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
+    $profilePhotoUrl = $_POST['profilePhotoUrl']; 
 
-    if (isset($_FILES['profilePhoto']) && $_FILES['profilePhoto']['error'] == UPLOAD_ERR_OK) {
-        $uploadDir = 'uploads/';
-        $uploadFile = $uploadDir . basename($_FILES['profilePhoto']['name']);
-
-        if (move_uploaded_file($_FILES['profilePhoto']['tmp_name'], $uploadFile)) {
-            $photoUrl = $uploadFile;
-            $stmt = $db->prepare("INSERT INTO photo (url) VALUES (?)");
-            $stmt->bind_param('s', $photoUrl);
-            $stmt->execute();
-            $profilePhotoID = $stmt->insert_id;
-        } else {
-            echo "Błąd przy zapisywaniu zdjęcia.";
-        }
-    }
-
-    if (isset($profilePhotoID)) {
-        $stmt = $db->prepare("UPDATE profil SET description=?, profilePhotoID=? WHERE ID=?");
-        $stmt->bind_param('sii', $description, $profilePhotoID, $_SESSION['user_id']);
-    } else {
-        $stmt = $db->prepare("UPDATE profil SET description=? WHERE ID=?");
-        $stmt->bind_param('si', $description, $_SESSION['user_id']);
-    }
+    
+    $stmt = $db->prepare("UPDATE profil SET description=?, url=? WHERE ID=?");
+    $stmt->bind_param('ssi', $description, $profilePhotoUrl, $_SESSION['user_id']);
 
     if ($stmt->execute()) {
         header("Location: profile.php");
@@ -48,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result) {
         $description = $result['description'];
-    } else {
+        $profilePhotoUrl = $result['url'];
         echo "Nie znaleziono profilu o podanym ID.";
         exit();
     }
@@ -80,14 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="profile-info-img">
             <div class="profile-info">
-                <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
+                <form action="edit_profile.php" method="POST">
                     <div class="form-group">
                         <label for="description">Opis:</label>
                         <textarea name="description" id="description" class="form-control" rows="4"><?php echo $description; ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="profilePhoto">Zdjęcie profilowe:</label>
-                        <input type="file" name="profilePhoto" id="profilePhoto" class="form-control">
+                        <label for="profilePhotoUrl">URL zdjęcia profilowego:</label>
+                        <input type="url" name="profilePhotoUrl" id="profilePhotoUrl" class="form-control" value="<?php echo $profilePhotoUrl; ?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
                 </form>
