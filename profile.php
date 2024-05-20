@@ -55,8 +55,7 @@ $profilePhotoUrl = $result['url'];
             <li><a href="strona.html">Główna</a></li>
             <li><a href="#">Wiadomości</a></li>
             <li><a href="#">Znajomi</a></li>
-            <li><a href="login.php">Login</a></li>
-            <li><a href="rejestracja.php">Utwórz konto</a></li>
+           
         </ul>
     </nav>
     <section class="profile-section">
