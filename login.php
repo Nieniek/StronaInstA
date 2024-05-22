@@ -44,7 +44,7 @@ $profilePhotoUrl = $result['url'];
 
     <nav>
         <ul>
-            <li><a href="strona.html">Główna</a></li>
+            <li><a href="strona.php">Główna</a></li>
             <li><a href="#">Wiadomości</a></li>
             <li><a href="#">Znajomi</a></li>
             <li><a href="logout.php">Wyloguj</a></li>

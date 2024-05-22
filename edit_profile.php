@@ -28,11 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
 
-    if ($result) {
-        $description = $result['description'];
-        $profilePhotoUrl = $result['url'];
+    if (!$result) {
         echo "Nie znaleziono profilu o podanym ID.";
         exit();
+    } else {
+        $description = $result['description'];
+        $profilePhotoUrl = $result['url'];
     }
 }
 ?>
@@ -52,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <nav>
         <ul>
-            <li><a href="strona.html">Główna</a></li>
+            <li><a href="strona.php">Główna</a></li>
             <li><a href="profile.php">Profil</a></li>
         </ul>
     </nav>
