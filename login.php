@@ -1,76 +1,39 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-
-$db = new mysqli('localhost', 'root', '', 'inst');
-
-$sql = "SELECT * FROM profil 
-        LEFT JOIN photo ON profil.profilePhotoID = photo.ID
-        WHERE profil.ID=? 
-        LIMIT 1";
-
-$query = $db->prepare($sql);
-$query->bind_param('i', $_SESSION['user_id']);
-$query->execute();
-$result = $query->get_result()->fetch_assoc();
-
-if (!$result) {
-    echo "Nie znaleziono profilu o podanym ID.";
-    exit();
-}
-
-$name = $result['namee'];
-$surename = $result['surenamee'];
-$description = $result['description'];
-$profilePhotoUrl = $result['url'];
-?>
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InstA - Profil</title>
-    <link rel="stylesheet" href="profil.css">
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <h1>InstA</h1>
-    </header>
-
-    <nav>
-        <ul>
-            <li><a href="strona.php">Główna</a></li>
-            <li><a href="#">Wiadomości</a></li>
-            <li><a href="#">Znajomi</a></li>
-            <li><a href="logout.php">Wyloguj</a></li>
-        </ul>
-    </nav>
-    <section class="profile-section">
-        <div class="profile-header">
-            <h2>Twój Profil</h2>
+    <div class="container">
+        <div class="row text-center mt-5">
+            <h1>Logowanie</h1>
+            <ul class="nav-links">
+                <li><a href="strona.php">Strona Główna</a></li>
+                <li><a href="rejestracja.php">Rejestracja</a></li>
+                <li><a href="profile.php">Profil</a></li>
+            </ul>
         </div>
-        <div class="profile-info-img">
-            <div class="profile-info">
-                <span id="name">
-                    <?php echo $name." ".$surename; ?>
-                </span>
-                <img src="<?php echo $profilePhotoUrl; ?>" alt="" id="profilePhoto">
-                <p id="profileDescription">
-                    <?php echo $description; ?>
-                </p>
-                <a href="edit_profile.php" class="btn btn-primary">Edytuj Profil</a>
-            </div>
+        <div class="row">
+            <form action="login_process.php" method="POST">
+                <div class="mb-3 col-6 offset-3">
+                    <label class="form-label w-100" for="emailInput">Email:</label>
+                    <input class="form-control w-100" type="email" name="email" id="emailInput"> 
+                </div>
+                <div class="mb-3 col-6 offset-3">
+                    <label class="form-label w-100" for="passwordInput" >Hasło</label>
+                    <input class="form-control w-100" type="password" name="password" id="passwordInput">
+                </div>
+                <div class="mb-3 col-6 offset-3">
+                    <button type="submit" class="btn btn-primary w-100">Zaloguj</button>
+                </div>
+            </form>
         </div>
-    </section>
-
-    <footer>
-        &copy; sadge
-    </footer>
+    </div>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
 

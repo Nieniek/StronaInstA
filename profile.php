@@ -22,8 +22,7 @@ if (!$result) {
 
 $name = $result['namee'];
 $surename = $result['surenamee'];
-$profilePhotoUrl = $result['url']; 
-
+$profilePhotoUrl = $result['url'];
 ?>
 
 <!DOCTYPE html>
@@ -44,19 +43,18 @@ $profilePhotoUrl = $result['url'];
             <li><a href="strona.php">Główna</a></li>
             <li><a href="#">Wiadomości</a></li>
             <li><a href="#">Znajomi</a></li>
+            <li><a href="logout.php">Wyloguj</a></li>
         </ul>
     </nav>
     <section class="profile-section">
         <div class="profile-header">
             <h2>Twój Profil</h2>
         </div>
-        <div class="profile-info">
-            <span id="name">
-                <?php echo $name . " " . $surename; ?>
-            </span>
-         
-            <div class="profile-photo">
-                <img src="<?php echo $profilePhotoUrl; ?>" alt="Zdjęcie profilowe">
+        <div class="profile-info-img">
+            <div class="profile-info">
+                <span id="name"><?php echo $name . " " . $surename; ?></span>
+                <img src="<?php echo $profilePhotoUrl; ?>" alt="Zdjęcie profilowe" id="profilePhoto">
+                <a href="edit_profile.php" class="btn btn-primary">Edytuj Profil</a>
             </div>
         </div>
     </section>
@@ -66,4 +64,5 @@ $profilePhotoUrl = $result['url'];
     </footer>
 </body>
 </html>
+
 
